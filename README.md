@@ -8,5 +8,5 @@ filerEmailRepository
                 .Returns(new Func&lt;Expression&lt;Func&lt;FilerEmail, bool&gt;&gt;, IQueryable&lt;FilerEmail&gt;&gt;(
                  expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
 
-            var svc = new FilerEmailService(filerEmailRepository.Object);
+var svc = new FilerEmailService(filerEmailRepository.Object);
 </code></pre>
