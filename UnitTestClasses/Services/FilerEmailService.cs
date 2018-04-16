@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using UnitTestClasses.Entities;
 using UnitTestClasses.Repos;
 
@@ -22,6 +24,11 @@ namespace UnitTestClasses.Services
         public IQueryable<FilerEmail> GetFilerEmailsById(int id)
         {
             return _feRepo.GetList(fe => fe.FilerId == id);
+        }
+
+        public IQueryable<FilerEmail> GetFilerEmailByExpression(Expression<Func<FilerEmail, bool>> ex)
+        {
+            return _feRepo.GetList(ex);
         }
     }
 }
