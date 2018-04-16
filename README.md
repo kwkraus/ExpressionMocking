@@ -4,8 +4,8 @@ purpose of this project is to show how to setup a Mock object to accept an Expre
 
 <pre><code>
 filerEmailRepository
-                .Setup(fr => fr.GetList(It.IsAny<Expression<Func<FilerEmail, bool>>>()))
-                .Returns(new Func<Expression<Func<FilerEmail, bool>>, IQueryable<FilerEmail>>(
+                .Setup(fr => fr.GetList(It.IsAny&lt;Expression&lt;Func&lt;FilerEmail, bool&gt;&gt;&gt;()))
+                .Returns(new Func&lt;Expression&lt;Func&lt;FilerEmail, bool&gt;&gt;, IQueryable&lt;FilerEmail&gt;&gt;(
                  expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
 
             var svc = new FilerEmailService(filerEmailRepository.Object);
