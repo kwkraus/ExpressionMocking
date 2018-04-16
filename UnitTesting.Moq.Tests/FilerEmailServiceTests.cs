@@ -58,14 +58,14 @@ namespace UnitTesting.Moq.Tests
                 new FilerEmail() { isDefault = true, Email = "myprimary@email.com", FilerId = 100 }
             };
 
-            var filerEmailRepository = new Mock<IFilerEmailRepository<FilerEmail>>();
+            var feRepoMock = new Mock<IFilerEmailRepository<FilerEmail>>();
 
-            filerEmailRepository
+            feRepoMock
                 .Setup(fr => fr.GetList(It.IsAny<Expression<Func<FilerEmail, bool>>>()))
                 .Returns(new Func<Expression<Func<FilerEmail, bool>>, IQueryable<FilerEmail>>(
                  expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
 
-            var svc = new FilerEmailService(filerEmailRepository.Object);
+            var svc = new FilerEmailService(feRepoMock.Object);
 
             // Act
             var resultsById = svc.GetFilerEmailsAsDefault().ToList();
