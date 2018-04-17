@@ -19,7 +19,7 @@ namespace UnitTesting.Moq.Tests
             //https://stackoverflow.com/questions/20364107/moq-lambda-expressions-as-parameters-and-evaluate-them-in-returns
 
             // Arrange
-            var testlist = new List<FilerEmail>
+            var feList = new List<FilerEmail>
             {
                 new FilerEmail() { isDefault = true, Email = "primary@email.com", FilerId = 1 },
                 new FilerEmail() { isDefault = false, Email = "nonprimary@email.com", FilerId = 2 },
@@ -32,7 +32,7 @@ namespace UnitTesting.Moq.Tests
             filerEmailRepository
                 .Setup(fr => fr.GetList(It.IsAny<Expression<Func<FilerEmail, bool>>>()))
                 .Returns(new Func<Expression<Func<FilerEmail, bool>>, IQueryable<FilerEmail>>(
-                 expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
+                 expr => feList.AsQueryable().Where(expr.Compile()).AsQueryable()));
 
             var svc = new FilerEmailService(
                 filerEmailRepository.Object, 
