@@ -43,7 +43,7 @@ namespace UnitTesting.Moq.Tests
             var resultsById = svc.UpdateUserProfileInternal(fid, "", 0);
 
             // Assert
-            Assert.IsTrue(resultsById == testlist.Where(fe => fe.FilerId == fid).FirstOrDefault().Email);
+            Assert.IsTrue(resultsById == "2ndprimary@email.com");
         }
     }
 }
