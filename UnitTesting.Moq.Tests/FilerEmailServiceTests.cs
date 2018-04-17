@@ -34,45 +34,16 @@ namespace UnitTesting.Moq.Tests
                 .Returns(new Func<Expression<Func<FilerEmail, bool>>, IQueryable<FilerEmail>>(
                  expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
 
-            var svc = new FilerEmailService(filerEmailRepository.Object);
+            var svc = new FilerEmailService(
+                filerEmailRepository.Object, 
+                new FilerRepository());
 
             // Act
-            var fid = 100;
-            var resultsById = svc.GetFilerEmailsById(fid).ToList();
+            var fid = 3;
+            var resultsById = svc.UpdateUserProfileInternal(fid, "", 0);
 
             // Assert
-            Assert.IsTrue(resultsById.Count == 1);
+            Assert.IsTrue(resultsById == testlist.Where(fe => fe.FilerId == fid).FirstOrDefault().Email);
         }
-
-        [TestMethod]
-        public void FilerEmailService_GetListByDefault_Expression_Test()
-        {
-            //https://stackoverflow.com/questions/20364107/moq-lambda-expressions-as-parameters-and-evaluate-them-in-returns
-
-            // Arrange
-            var testlist = new List<FilerEmail>
-            {
-                new FilerEmail() { isDefault = true, Email = "primary@email.com", FilerId = 1 },
-                new FilerEmail() { isDefault = false, Email = "nonprimary@email.com", FilerId = 2 },
-                new FilerEmail() { isDefault = true, Email = "2ndprimary@email.com", FilerId = 3 },
-                new FilerEmail() { isDefault = true, Email = "myprimary@email.com", FilerId = 100 }
-            };
-
-            var feRepoMock = new Mock<IFilerEmailRepository<FilerEmail>>();
-
-            feRepoMock
-                .Setup(fr => fr.GetList(It.IsAny<Expression<Func<FilerEmail, bool>>>()))
-                .Returns(new Func<Expression<Func<FilerEmail, bool>>, IQueryable<FilerEmail>>(
-                 expr => testlist.AsQueryable().Where(expr.Compile()).AsQueryable()));
-
-            var svc = new FilerEmailService(feRepoMock.Object);
-
-            // Act
-            var resultsById = svc.GetFilerEmailsAsDefault().ToList();
-
-            // Assert
-            Assert.IsTrue(resultsById.Count == 3);
-        }
-
     }
 }

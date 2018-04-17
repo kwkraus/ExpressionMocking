@@ -40,10 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Filer.cs" />
     <Compile Include="Entities\FilerEmail.cs" />
     <Compile Include="Repos\FilerEmailRepository.cs" />
+    <Compile Include="Repos\FilerRepository.cs" />
     <Compile Include="Repos\IFilerEmailRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\IFilerRepository.cs" />
     <Compile Include="Services\FilerEmailService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

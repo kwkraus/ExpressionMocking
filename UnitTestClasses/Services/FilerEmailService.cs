@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using UnitTestClasses.Entities;
@@ -9,25 +10,34 @@ namespace UnitTestClasses.Services
     public class FilerEmailService
     {
         private readonly IFilerEmailRepository<FilerEmail> _feRepo;
+        private readonly IFilerRepository _fRepo;
+        private Filer filer;
 
-        public FilerEmailService(IFilerEmailRepository<FilerEmail> feRepo)
+        public FilerEmailService(
+            IFilerEmailRepository<FilerEmail> feRepo,
+            IFilerRepository fRepo)
         {
             _feRepo = feRepo;
+            _fRepo = fRepo;
         }
 
-        public IQueryable<FilerEmail> GetFilerEmailsAsDefault()
+        public string UpdateUserProfileInternal(
+            int userId, 
+            string changedEmailAddress, 
+            int originalStatusId)
         {
-            return _feRepo.GetList(fe => fe.isDefault == true);
+            filer = _fRepo.GetWithNoTracking(f => f.FilerId == userId);
+
+            var eUserMailRecord = this.GetFilerEmail
+                (c => c.FilerId == filer.FilerId && c.isDefault == true)
+                .FirstOrDefault();
+
+            return eUserMailRecord.Email;
         }
 
-        public IQueryable<FilerEmail> GetFilerEmailsById(int id)
+        public IEnumerable<FilerEmail> GetFilerEmail(Expression<Func<FilerEmail, bool>> where)
         {
-            return _feRepo.GetList(fe => fe.FilerId == id);
-        }
-
-        public IQueryable<FilerEmail> GetFilerEmailByExpression(Expression<Func<FilerEmail, bool>> ex)
-        {
-            return _feRepo.GetList(ex);
+            return _feRepo.GetList(where);
         }
     }
 }
