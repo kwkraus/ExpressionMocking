@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Entities\Filer.cs" />
     <Compile Include="Entities\FilerEmail.cs" />
+    <Compile Include="Entities\UserObject.cs" />
     <Compile Include="Repos\FilerEmailRepository.cs" />
     <Compile Include="Repos\FilerRepository.cs" />
     <Compile Include="Repos\IFilerEmailRepository.cs" />

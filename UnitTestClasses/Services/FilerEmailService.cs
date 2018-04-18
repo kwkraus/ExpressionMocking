@@ -22,11 +22,11 @@ namespace UnitTestClasses.Services
         }
 
         public string UpdateUserProfileInternal(
-            int userId, 
+            UserObject u, 
             string changedEmailAddress, 
             int originalStatusId)
         {
-            filer = _fRepo.GetWithNoTracking(f => f.FilerId == userId);
+            filer = _fRepo.GetWithNoTracking(f => f.FilerId == u.UserId);
 
             var eUserMailRecord = this.GetFilerEmail
                 (c => c.FilerId == filer.FilerId && c.isDefault == true)

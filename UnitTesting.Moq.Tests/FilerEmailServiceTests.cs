@@ -39,8 +39,12 @@ namespace UnitTesting.Moq.Tests
                 new FilerRepository());
 
             // Act
-            var fid = 3;
-            var resultsById = svc.UpdateUserProfileInternal(fid, "", 0);
+            var u = new UserObject()
+            {
+                UserId = 3
+            };
+
+            var resultsById = svc.UpdateUserProfileInternal(u, "", 0);
 
             // Assert
             Assert.IsTrue(resultsById == "2ndprimary@email.com");
